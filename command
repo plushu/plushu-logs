@@ -19,14 +19,4 @@ if [[ ! -d "$app_dir" ]]; then
   exit 1
 fi
 
-cidfile=$app_dir/proc/web.cid
-
-if [[ -f "$cidfile" ]]; then
-  if [[ "$2" == "-t" ]]; then
-    docker logs --follow "$(<"$cidfile")"
-  else
-    docker logs "$(<"$cidfile")" | tail -n 100
-  fi
-else
-  echo "App not running: $app"
-fi
+"$PLUSHU_ROOT/lib/plushook" app-logs "$app" | sort -sk1,1
